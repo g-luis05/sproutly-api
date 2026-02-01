@@ -7,7 +7,7 @@ const globalForPrisma = global as unknown as {
 }
 
 if (!process.env.POSTGRES_URL) {
-  throw new Error('POSTGRES_URL is not defined')
+  throw 'POSTGRES_URL is not defined'
 }
 
 export const prisma =
@@ -15,8 +15,7 @@ export const prisma =
   new PrismaClient({
     adapter: new PrismaPg({
       connectionString: process.env.POSTGRES_URL,
-    }),
-    log: ['error', 'warn'],
+    })
   })
 
 if (process.env.NODE_ENV !== 'production') {
