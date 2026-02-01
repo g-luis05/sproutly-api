@@ -1,0 +1,40 @@
+{
+  "exclude": ["node_modules", "dist"],
+  "include": ["src"],
+  "compilerOptions": {
+    // File Layout
+    "rootDir": "src",
+    "outDir": "dist/",
+
+    // Module System
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "es2023",
+    "lib": ["ES2023"],
+    "types": ["node"],
+
+    // ESM Interoperability
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+
+    // Output Configuration
+    "sourceMap": true,
+    "noEmit": false,
+    "removeComments": true,
+    "inlineSources": true,
+
+    // Strict Type Checking
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    
+    // Additional Strictness (optional)
+    "noImplicitReturns": true,
+    "noImplicitOverride": true,
+    "forceConsistentCasingInFileNames": true,
+
+    // Performance
+    "skipLibCheck": true,
+    "isolatedModules": true
+  }
+}
