@@ -1,4 +1,6 @@
-import 'dotenv/config'
+import { Server } from './server';
+import { envs } from './config/env';
+import { AppRoutes } from './routes';
 
 (() => {
     main()
@@ -6,5 +8,10 @@ import 'dotenv/config'
 
 
 function main() {
-    console.log(`Running from port ${process.env.PORT}`);   
+    const server = new Server({
+        port: envs.PORT,
+        routes: AppRoutes.routes,
+    });
+    
+    server.start();
 }
