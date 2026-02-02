@@ -1,6 +1,7 @@
 import express, { Router } from 'express';
 import cors from 'cors';
 import { Return } from '@prisma/client/runtime/client';
+import { ErrorMiddleware } from './middlewares';
 
 interface Options {
     port: number;
@@ -30,6 +31,9 @@ export class Server {
 
         //Route
         this.app.use( this.routes );
+
+        //Error handler
+        this.app.use( ErrorMiddleware.handleError );
 
 
         this.serverListener = this.app.listen( this.port, () => {
