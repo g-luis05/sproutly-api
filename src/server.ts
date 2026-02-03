@@ -27,12 +27,12 @@ export class Server {
         // Middleware
         this.app.use( express.json() );
         this.app.use( express.urlencoded( { extended: true } ) );
-        this.app.use( cors() );
+        this.app.use( cors() ); // TODO - investigate how this works
 
         //Route
         this.app.use( this.routes );
 
-        //Error handler
+        //Error handler - At the end
         this.app.use( ErrorMiddleware.handleError );
 
 
