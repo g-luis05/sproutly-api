@@ -1,21 +1,29 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { AuthService } from "../services";
 
 
 export class AuthController {
 
-    
 
-    static async requestOtp( req: Request, res: Response ) {
-        const { email } = req.body;
+    static async requestOtp( req: Request, res: Response, next: NextFunction ) {
 
-        if (!email || typeof email !== 'string') {
-            return res.status(400).json( { message: 'Email is required' } );
+        try {
+            await AuthService.requestOtp(req.body.email);
+            return res.status(200).json({ message: 'OTP sent' });
+        } catch (error) {
+            return next(error);
         }
 
-        await AuthService.requestOtp(email);
+    }
 
-        return res.status(200).json( { message: 'OTP sent' } );
+    static async verifyOtp( req: Request, res: Response, next: NextFunction ) {
+
+        try {
+            const { token } = await AuthService.verifyOtp(req.body.email, req.body.code);
+            return res.status(200).json({ token });
+        } catch (error) {
+            return next(error);
+        }
 
     }
 
