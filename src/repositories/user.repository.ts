@@ -9,5 +9,8 @@ export const UserRepository = {
     findByEmail(email: string) {
         return prisma.user.findUnique({ where: { email } });
     },
+    updateLastLogin(userId: string) {
+        return prisma.user.update({ where: { id: userId }, data: { lastLoginAt: new Date() } });
+    },
 
 }
