@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { TopicService } from "../services/topic.service";
 import { DeleteTopicDTO, UpdateTopicDTO } from "../dtos";
+import { DecisionService } from "../services/decision.service";
 
 
 export class TopicController {
@@ -35,16 +36,17 @@ export class TopicController {
     }
 
     static async findRootDecisionsByTopic(req: Request, res: Response, next: NextFunction) {
-
-        try {
-            const { id } = req.params as { id: string };
-            const userId = req.user!.id;
-            const decisions = await TopicService.findRootDecisionsByTopic(id, userId);
-            return res.status(200).json({ decisions });
-        } catch (error) {
-            return next(error);
+    
+            try {
+                const { id } = req.params as { id: string };
+                const userId = req.user!.id;
+                const decisions = await DecisionService.findRootDecisionsByTopic(id, userId);
+                return res.status(200).json({ decisions });
+            } catch (error) {
+                return next(error);
+            }
         }
-    }
+
 
     static async updateTopic(req: Request, res: Response, next: NextFunction) {
 
