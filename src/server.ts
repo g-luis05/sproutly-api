@@ -1,6 +1,5 @@
 import express, { Router } from 'express';
 import cors from 'cors';
-import { Return } from '@prisma/client/runtime/client';
 import { ErrorMiddleware } from './middlewares';
 
 interface Options {
@@ -11,7 +10,7 @@ interface Options {
 export class Server {
 
     public readonly app = express();
-    private serverListener?: Return<typeof this.app.listen>;
+    private serverListener?: ReturnType<typeof this.app.listen>;
     private readonly port: number;
     private readonly routes: Router;
 
