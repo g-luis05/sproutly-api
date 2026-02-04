@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { AuthMiddleware, ValidateMiddleware } from "../middlewares";
-import { createTopicSchema, deleteTopicSchemaParams, updateTopicParamsSchema, updateTopicSchema } from "../validators/topic.validator";
+import { createTopicSchema, deleteTopicSchemaParams, updateTopicSchema, updateTopicSchemaParams } from "../validators/topic.validator";
 import { TopicController } from "../controllers/topic.controller";
 
 
@@ -23,7 +23,7 @@ export class TopicRoutes {
 
         router.patch('/:id',
             AuthMiddleware.verifyToken,
-            ValidateMiddleware.validateParams( updateTopicParamsSchema ),
+            ValidateMiddleware.validateParams( updateTopicSchemaParams ),
             ValidateMiddleware.validateBody( updateTopicSchema ),
             TopicController.updateTopic,
         );
