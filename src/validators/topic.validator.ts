@@ -11,10 +11,6 @@ export const updateTopicSchema = z.object({
     description: z.string().optional(),
 });
 
-export const updateTopicSchemaParams = z.object({
-    id: z.string().uuid({ message: "Invalid topic id" }),
-})
-
-export const deleteTopicSchemaParams = z.object({
-    id: z.string().uuid({ message: "Invalid topic id" })
+export const idValidatorSchemaParams = z.object({
+    id: z.string().uuid({ message: "Invalid id" }),
 });

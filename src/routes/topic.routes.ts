@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { AuthMiddleware, ValidateMiddleware } from "../middlewares";
-import { createTopicSchema, deleteTopicSchemaParams, updateTopicSchema, updateTopicSchemaParams } from "../validators/topic.validator";
+import { createTopicSchema, idValidatorSchemaParams, updateTopicSchema } from "../validators/topic.validator";
 import { TopicController } from "../controllers/topic.controller";
 
 
@@ -21,21 +21,22 @@ export class TopicRoutes {
             TopicController.findAllTopics,
         );
 
-        router.get('/:topicId/decisions',
+        router.get('/:id/decisions',
             AuthMiddleware.verifyToken,
+            ValidateMiddleware.validateParams( idValidatorSchemaParams ),
             TopicController.findRootDecisionsByTopic,
-        )
+        );
 
         router.patch('/:id',
             AuthMiddleware.verifyToken,
-            ValidateMiddleware.validateParams( updateTopicSchemaParams ),
+            ValidateMiddleware.validateParams( idValidatorSchemaParams ),
             ValidateMiddleware.validateBody( updateTopicSchema ),
             TopicController.updateTopic,
         );
 
         router.delete('/:id',
             AuthMiddleware.verifyToken,
-            ValidateMiddleware.validateParams( deleteTopicSchemaParams ),
+            ValidateMiddleware.validateParams( idValidatorSchemaParams ),
             TopicController.deleteTopic,
         );
         
