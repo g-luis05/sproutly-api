@@ -15,11 +15,6 @@ export class TopicService {
         return topics;
     }
 
-    static async findRootDecisionsByTopic(topicId: string, userId: string) {
-        const decisions = await TopicRepository.findRootDecisionsByTopic(topicId, userId);
-        return decisions;
-    }
-
     static async updateTopic(dto: UpdateTopicDTO) {
         const data: { title?: string; description?: string; } = {};
 
