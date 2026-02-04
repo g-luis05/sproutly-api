@@ -19,6 +19,20 @@ export class ValidateMiddleware {
         }
     }
 
+    static validateParams( schema: ZodSchema) {
+        return ( req: Request, res: Response, next: NextFunction ) => {
+            try {
+                schema.parse(req.params);
+                next();
+            } catch (error) {
+               if (error instanceof ZodError) {
+                   return res.status(400).json( { message: error.issues } );
+               } 
+               return next(error);
+            }  
+        }
+    }
+
 }
 
 
