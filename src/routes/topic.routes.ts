@@ -21,6 +21,11 @@ export class TopicRoutes {
             TopicController.findAllTopics,
         );
 
+        router.get('/:topicId/decisions',
+            AuthMiddleware.verifyToken,
+            TopicController.findRootDecisionsByTopic,
+        )
+
         router.patch('/:id',
             AuthMiddleware.verifyToken,
             ValidateMiddleware.validateParams( updateTopicSchemaParams ),

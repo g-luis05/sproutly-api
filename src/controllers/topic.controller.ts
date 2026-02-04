@@ -34,6 +34,18 @@ export class TopicController {
 
     }
 
+    static async findRootDecisionsByTopic(req: Request, res: Response, next: NextFunction) {
+
+        try {
+            const { id } = req.params as { id: string };
+            const userId = req.user!.id;
+            const decisions = await TopicService.findRootDecisionsByTopic(id, userId);
+            return res.status(200).json({ decisions });
+        } catch (error) {
+            return next(error);
+        }
+    }
+
     static async updateTopic(req: Request, res: Response, next: NextFunction) {
 
         try {
