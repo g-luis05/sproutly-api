@@ -28,15 +28,12 @@ export class AuthService {
             expiresAt
         });
 
+        //TODO - proper service email
         await EmailService.sendEmail(email, code);
 
     }
 
     static async verifyOtp( email: string, code: string ) {
-
-        if (!email || !code) {
-            throw CustomError.badRequest('Email and code are required');
-        }
 
         const user = await UserRepository.findByEmail(email);
         if (!user) throw CustomError.badRequest('User not found');
@@ -64,7 +61,7 @@ export class AuthService {
             email: user.email
         });
 
-        console.log( token); //Development
+        console.log( token ); //Development
 
         return { token };
 
