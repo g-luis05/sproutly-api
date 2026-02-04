@@ -3,6 +3,7 @@ import { HealthRoutes } from "./routes/health.routes";
 import { ProtectedRoutes } from "./routes/protected.routes";
 import { AuthRoutes } from "./routes/auth.routes";
 import { TopicRoutes } from "./routes/topic.routes";
+import { DecisionRoutes } from "./routes/decision.routes";
 
 
 export class AppRoutes {
@@ -13,8 +14,7 @@ export class AppRoutes {
 
         router.use('/api/v1/auth', AuthRoutes.routes);
         router.use('/api/v1/topics', TopicRoutes.routes);
-        // router.use('/api/v1/decisions');
-        // router.use('/api/v1/users');
+        router.use('/api/v1/decisions', DecisionRoutes.routes );
         router.use('/api/v1/health', HealthRoutes.routes);
         router.use('/api/v1/protected', ProtectedRoutes.routes);
 
