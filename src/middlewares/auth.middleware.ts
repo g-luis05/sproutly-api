@@ -3,8 +3,6 @@ import { jwtAdapter } from "../infrastructure/config/jwt.adapter";
 
 export class AuthMiddleware {
 
-    //TODO: auth middleware
-
     static async verifyToken( req: Request, res: Response, next: NextFunction ) {
     
         const authHeader = req.headers.authorization;
