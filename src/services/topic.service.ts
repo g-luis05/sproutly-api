@@ -1,6 +1,6 @@
 import { CustomError } from "../domain/errors/custom.error";
 import { CreateTopicDTO, DeleteTopicDTO, UpdateTopicDTO } from "../dtos";
-import { TopicRepository } from "../repositories/topic.repository";
+import { TopicRepository } from "../repositories/";
 
 
 

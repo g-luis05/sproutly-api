@@ -15,7 +15,3 @@ export const updateDecisionSchema = z.object({
     status: z.nativeEnum(DecisionStatus).optional(),
     order: z.number().optional().nullable(),
 });
-
-export const idValidatorSchemaParams = z.object({
-    id: z.string().uuid({ message: "Invalid id" }),
-});

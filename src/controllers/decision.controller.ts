@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { CreateDecisionDTO, UpdateDecisionDTO } from '../dtos';
-import { DecisionService } from '../services/decision.service';
+import { DecisionService } from '../services/';
 
 
 export class DecisionController {

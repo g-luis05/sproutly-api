@@ -11,8 +11,6 @@ export class ErrorMiddleware {
         } else {
             return res.status(500).json( { message: 'Internal server error' } );
         }
-
-        // console.log( error ); // Only for development
     }
 
 }

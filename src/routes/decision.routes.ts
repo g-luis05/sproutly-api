@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { AuthMiddleware, ValidateMiddleware } from "../middlewares";
 import { createDecisionSchema, idValidatorSchemaParams, updateDecisionSchema } from "../validators";
-import { DecisionController } from "../controllers/decision.controller";
+import { DecisionController } from "../controllers/";
 
 
 export class DecisionRoutes {

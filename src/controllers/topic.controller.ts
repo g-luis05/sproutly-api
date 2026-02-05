@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { TopicService } from "../services/topic.service";
 import { DeleteTopicDTO, UpdateTopicDTO } from "../dtos";
-import { DecisionService } from "../services/decision.service";
+import { DecisionService, TopicService } from "../services/";
 
 
 export class TopicController {

@@ -1,4 +1,5 @@
 
-export * from './health.routes';
+
 export * from './auth.routes';
-export * from './protected.routes';
+export * from './topic.routes';
+export * from './decision.routes';
