@@ -27,6 +27,7 @@ model User {
   topics Topic[]
   decisions Decision[]
   otpCodes OtpCode[]
+  refreshTokens RefreshToken[]
 }
 
 model Topic {
@@ -74,8 +75,22 @@ model OtpCode {
 
   
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  //to avoid full table scan
+  
   @@index([userId, used, expiresAt])
+}
+
+model RefreshToken {
+
+  id String @id @default(uuid())
+  token String @unique
+  userId String
+  expiresAt DateTime
+  revoked Boolean @default(false)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 
