@@ -1,38 +1,32 @@
 import { Request, Response, NextFunction } from "express";
 import { jwtAdapter } from "../infrastructure/config/jwt.adapter";
+import { AuthPayload } from "../domain/interfaces/auth-payload.interface";
 
 export class AuthMiddleware {
 
-    static async verifyToken( req: Request, res: Response, next: NextFunction ) {
-    
-        const authHeader = req.headers.authorization;
-        if (!authHeader?.startsWith('Bearer ')) return res.status(401).json({ message: 'Missing auth header' });
+    static async verifyToken(req: Request, res: Response, next: NextFunction) {
 
-        const token = authHeader.split(' ')[1];
-        if (!token) return res.status(401).json({ message: 'Invalid auth format' });
+        try {
+            const authHeader = req.headers.authorization;
+            if (!authHeader?.startsWith('Bearer ')) {
+                return res.status(401).json({ message: 'Missing auth header' });
+            }
 
-        const payload = await jwtAdapter.verifyToken<{
-            id: string;
-            email: string;
-        }>(token);
+            const token = authHeader.split(' ')[1];
+            if (!token) return res.status(401).json({ message: 'Invalid auth format' });
 
-        if (!payload) return res.status(401).json({ message: 'Invalid or expired token' });
+            const payload = await jwtAdapter.verifyToken<AuthPayload>(token);
 
-        // From global type, express augmentation req.user
-        req.user = payload;
+            if (!payload) return res.status(401).json({ message: 'Invalid or expired token' });
 
-        //TODO - Refresh token
+            // From global type, express augmentation req.user
+            req.user = payload;
+            return next();
+        } catch (error) {
+            return res.status(500).json({ message: 'Internal server error' });
+        }
 
-        return next();
     }
 
-
-    // Demo
-
-    static requireAuth(  req: Request, res: Response, next: NextFunction ) {        
-        
-        return res.status(401).json( { message: 'Unauthorized' } );
-        
-    }
 
 }
