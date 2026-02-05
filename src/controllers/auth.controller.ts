@@ -19,12 +19,32 @@ export class AuthController {
     static async verifyOtp( req: Request, res: Response, next: NextFunction ) {
 
         try {
-            const { token } = await AuthService.verifyOtp(req.body.email, req.body.code);
-            return res.status(200).json({ token });
+            const tokens = await AuthService.verifyOtp(req.body.email, req.body.code);
+            return res.status(200).json({ tokens });
         } catch (error) {
             return next(error);
         }
 
+    }
+
+    static async refresh( req: Request, res: Response, next: NextFunction ) {
+        try {
+            const { refreshToken } = req.body;
+            const tokens = await AuthService.refresh(refreshToken);
+            return res.status(200).json(tokens);
+        } catch(error) {
+            return next(error);
+        }
+    }
+
+    static async logout( req: Request, res: Response, next: NextFunction ) {
+        try {
+            const { refreshToken } = req.body;
+            await AuthService.logout(refreshToken);
+            return res.status(200).json({ message: 'Logout successful' });
+        } catch(error) {
+            return next(error);
+        }
     }
 
 }
