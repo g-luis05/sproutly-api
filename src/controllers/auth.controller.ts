@@ -9,7 +9,7 @@ export class AuthController {
 
         try {
             await AuthService.requestOtp(req.body.email);
-            return res.status(200).json({ message: 'OTP sent' });
+            return res.status(200).json({ message: 'If the email exists, an OTP will be sent' });
         } catch (error) {
             return next(error);
         }
@@ -20,7 +20,7 @@ export class AuthController {
 
         try {
             const tokens = await AuthService.verifyOtp(req.body.email, req.body.code);
-            return res.status(200).json({ tokens });
+            return res.status(200).json(tokens);
         } catch (error) {
             return next(error);
         }
