@@ -1,8 +1,9 @@
 import { CustomError } from "../domain/errors/custom.error";
 import { hashAdapter } from "../infrastructure/config/bcrypt.adapter";
 import { jwtAdapter } from "../infrastructure/config/jwt.adapter";
-import { OtpRepository, UserRepository } from "../repositories";
+import { OtpRepository, UserRepository, RefreshTokenRepository } from "../repositories";
 import { EmailService } from "./email.service";
+import crypto from "crypto";
 
 
 export class AuthService {
@@ -56,15 +57,42 @@ export class AuthService {
         await OtpRepository.markUsed(otp.id);
         await UserRepository.updateLastLogin(user.id);
 
-        const token = jwtAdapter.generateToken({
+        const accessToken = jwtAdapter.generateToken({
             id: user.id,
             email: user.email
         });
 
-        console.log( token ); //Development
+        const refreshToken = crypto.randomUUID();
+        const refreshExpiresAt = new Date( Date.now() + 1000 * 60 * 60 * 24 * 7 ); // 7 days
 
-        return { token };
+        await RefreshTokenRepository.create({
+            token: refreshToken,
+            userId: user.id,
+            expiresAt: refreshExpiresAt,
+        });
 
+        return { accessToken, refreshToken };
+
+    }
+
+    static async refresh(token: string) {
+
+        const stored = await RefreshTokenRepository.findValid(token);
+        if (!stored) throw CustomError.unauthorized('Invalid token');
+
+        const user = await UserRepository.findById(stored.userId);
+        if (!user) throw CustomError.unauthorized('User not found');
+
+        const newAccessToken = jwtAdapter.generateToken({
+            id: user.id,
+            email: user.email
+        });
+
+        return { accessToken: newAccessToken };
+    }
+
+    static async logout(refreshToken: string) {
+        await RefreshTokenRepository.revoke(refreshToken);
     }
 
 }
