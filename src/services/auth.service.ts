@@ -1,8 +1,8 @@
 import { CustomError } from "../domain/errors/custom.error";
 import { hashAdapter } from "../infrastructure/config/bcrypt.adapter";
 import { jwtAdapter } from "../infrastructure/config/jwt.adapter";
+import { EmailService } from "../infrastructure/email/email.service";
 import { OtpRepository, UserRepository, RefreshTokenRepository } from "../repositories";
-import { EmailService } from "./email.service";
 import crypto from "crypto";
 
 
@@ -21,7 +21,7 @@ export class AuthService {
         const code = Math.floor(100000 + Math.random() * 900000).toString();
         
         const codeHash = await hashAdapter.hash(code);
-        const expiresAt = new Date(Date.now() + 15*60*1000); // 15 minutes
+        const expiresAt = new Date(Date.now() + 10*60*1000); // 15 minutes
 
         await OtpRepository.create({
             userId: user.id,
@@ -29,9 +29,12 @@ export class AuthService {
             expiresAt
         });
 
-        //TODO - proper service email
-        await EmailService.sendEmail(email, code);
-
+        //for now we don't want to send it everytime
+        // try {
+        //     const otp = await EmailService.sendOtp(email, code);
+        // } catch (error) {
+        //     console.error(error);
+        // }
     }
 
     static async verifyOtp( email: string, code: string ) {
