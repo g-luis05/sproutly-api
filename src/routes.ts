@@ -12,7 +12,6 @@ export class AppRoutes {
         router.use('/api/v1/topics', TopicRoutes.routes);
         router.use('/api/v1/decisions', DecisionRoutes.routes );
 
-
         return router;
 
     }
