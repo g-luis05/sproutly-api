@@ -1,6 +1,8 @@
 import express, { Router } from 'express';
 import cors from 'cors';
 import { ErrorMiddleware } from './middlewares';
+import helmet from 'helmet';
+import { apiLimiter } from './infrastructure/config/rate-limit';
 
 interface Options {
     port: number;
@@ -23,12 +25,25 @@ export class Server {
 
     async start() {
 
-        // Middleware
-        this.app.use( express.json() );
-        this.app.use( express.urlencoded( { extended: true } ) );
-        this.app.use( cors() ); // TODO - investigate how this works
+        //Security headers
+        this.app.use(helmet());
 
-        //Route
+        this.app.use( cors({
+            origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+            credentials: true,
+            methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+            allowedHeaders: ['Content-Type', 'Authorization'],
+        }) );
+
+        // Middleware
+        this.app.use( express.json({ limit: '10mb' }) );
+        this.app.use( express.urlencoded( { extended: true, limit: '10mb' } ) );
+        
+
+        //Global rate limiter
+        this.app.use('/api/', apiLimiter  );
+
+        //Routes
         this.app.use( this.routes );
 
         //Error handler - At the end
@@ -38,6 +53,20 @@ export class Server {
         this.serverListener = this.app.listen( this.port, () => {
             console.log( `Server running on port ${ this.port }` );
         });
+    }
+
+    async close() {
+        return new Promise<void>((resolve) => {
+        
+            if (this.serverListener) {
+                this.serverListener.close(() => {
+                    console.log('Server closed');
+                    resolve();
+                });
+            } else {
+                resolve();
+            }
+        })
     }
 
 }
