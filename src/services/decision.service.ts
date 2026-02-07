@@ -22,14 +22,13 @@ export class DecisionService {
 
         return DecisionRepository.create({
             ...dto,
-            parentId: dto.parentId ?? null, 
-            order: dto.order ?? null,
+            parentId: dto.parentId ?? null,
             status: DecisionStatus.IN_PROCESS,
         });
     }
 
     static async findChildren(parentId: string, userId: string) {
-        return DecisionRepository.findChildren(parentId, userId);
+        return await DecisionRepository.findChildren(parentId, userId);
     }
 
     static async findRootDecisionsByTopic(topicId: string, userId: string) {

@@ -7,7 +7,6 @@ export interface CreateDecisionDTO {
     userId: string;
     topicId: string;
     parentId?: string | null;
-    order?: number | null;
 }
 
 export interface UpdateDecisionDTO {
