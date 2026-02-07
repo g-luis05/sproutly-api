@@ -11,7 +11,6 @@ export class DecisionController {
                 title: req.body.title,
                 description: req.body.description,
                 parentId: req.body.parentId,
-                order: req.body.order,
                 topicId: req.body.topicId,
                 userId: req.user!.id
             };
