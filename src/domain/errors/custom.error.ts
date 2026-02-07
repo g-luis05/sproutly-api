@@ -27,5 +27,9 @@ export class CustomError extends Error {
         return new CustomError(500, message);
     }
 
+    static tooManyRequests(message: string) {
+        return new CustomError(429, message);
+    }
+
 
 }
