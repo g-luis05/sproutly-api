@@ -20,7 +20,7 @@ export class AuthService {
         const code = Math.floor(100000 + Math.random() * 900000).toString();
         
         const codeHash = await hashAdapter.hash(code);
-        const expiresAt = new Date(Date.now() + 10*60*1000); // 15 minutes
+        const expiresAt = new Date(Date.now() + 10*60*1000);
 
         await OtpRepository.create({
             userId: user.id,
