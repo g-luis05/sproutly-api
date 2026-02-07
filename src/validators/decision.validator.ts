@@ -5,15 +5,15 @@ export const createDecisionSchema = z.object({
     title: z.string().min(1, { message: "Title must be at least 1 character" }),
     description: z.string().min(1, { message: "Description must be at least 1 character" }),
     topicId: z.string().uuid({ message: "Invalid topic id" }),
-    parentId: z.string().uuid().optional().nullable(),
-    order: z.number().optional().nullable(),
+    parentId: z.string().uuid().nullable().optional(),
+    order: z.number().nullable().optional(),
 });
 
 export const updateDecisionSchema = z.object({
     title: z.string().min(1, { message: "Title must be at least 1 character" }).optional(),
     description: z.string().min(1, { message: "Description must be at least 1 character" }).optional(),
     status: z.nativeEnum(DecisionStatus).optional(),
-    order: z.number().optional().nullable(),
+    order: z.number().nullable().optional(),
 });
 
 export const refreshTokenSchema = z.object({
