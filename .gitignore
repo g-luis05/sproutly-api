@@ -5,4 +5,3 @@ dist/
 /src/generated/prisma
 .env
 /postgres
-.env.test
