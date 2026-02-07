@@ -14,10 +14,9 @@ export class AuthService {
         if (!user) {
             user = await UserRepository.create(email);
         }
-        // Invalidate any active OTP codes
+
         await OtpRepository.invalidateActive(user.id);
 
-        //annd generate here
         const code = Math.floor(100000 + Math.random() * 900000).toString();
         
         const codeHash = await hashAdapter.hash(code);
@@ -29,12 +28,11 @@ export class AuthService {
             expiresAt
         });
 
-        //for now we don't want to send it everytime
-        // try {
-        //     const otp = await EmailService.sendOtp(email, code);
-        // } catch (error) {
-        //     console.error(error);
-        // }
+        try {
+            const otp = await EmailService.sendOtp(email, code);
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     static async verifyOtp( email: string, code: string ) {
