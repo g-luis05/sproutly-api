@@ -29,8 +29,9 @@ export class Server {
         //Security headers
         this.app.use(helmet());
 
+        //envs.FRONTEND_URL || `http://localhost:${envs.PORT}` Origin
         this.app.use( cors({
-            origin: envs.FRONTEND_URL || `http://localhost:${envs.PORT}`,
+            origin: true,
             credentials: true,
             methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
             allowedHeaders: ['Content-Type', 'Authorization'],
