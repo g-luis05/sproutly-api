@@ -28,12 +28,7 @@ export class AuthService {
             expiresAt
         });
 
-        try {
-            const otp = await EmailService.sendOtp(email, code);
-        } catch (error) {
-            console.error('Error sending OTP:', error);
-            throw error;
-        }
+        await EmailService.sendOtp(email, code);
     }
 
     static async verifyOtp( email: string, code: string ) {
