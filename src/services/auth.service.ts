@@ -31,7 +31,8 @@ export class AuthService {
         try {
             const otp = await EmailService.sendOtp(email, code);
         } catch (error) {
-            console.error(error);
+            console.error('Error sending OTP:', error);
+            throw error;
         }
     }
 
