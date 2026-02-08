@@ -20,7 +20,7 @@ A RESTful API to manage hierarchical decisions with passwordless authentication 
 - **Database**: PostgreSQL 17
 - **ORM**: Prisma 7
 - **Authentication**: JWT (jsonwebtoken)
-- **Email**: Nodemailer
+- **Email**: Nodemailer (dev) - Resend (production)
 - **Security**: Helmet, express-rate-limiter, CORS
 - **Validation**: Zod
 
@@ -67,6 +67,10 @@ EMAIL_HOST=smtp.example.com
 EMAIL_PORT=587
 EMAIL_USER=example@email.com
 EMAIL_KEY=your_app_key
+
+#EMAIL - Production
+RESEND_API_KEY=your_resend_api_key
+EMAIL_FROM=onboarding@resend.dev
 
 #FRONTEND (optional)
 FRONTEND_URL=http://localhost:3000
@@ -214,6 +218,9 @@ Authorization: Bearer
             "userId": "uuid",
             "createdAt": "2026-02-07T10...",
             "updatedAt": "2026-02-07T10..."
+        },
+        {
+            "..."
         }
     ]
 }
