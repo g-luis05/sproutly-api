@@ -141,6 +141,14 @@ Content-Type: application/json
 }
 ```
 
+**Response**:
+```json
+{
+    "accessToken": "eyJhbGh...",
+    "refreshToken": "88gf..."
+}
+```
+
 ---
 
 #### Refresh Token
@@ -151,7 +159,7 @@ POST /auth/refresh
 Content-Type: application/json
 
 {
-    "accessToken": "eyJhbGc..."
+    "refreshToken": "88gf73..."
 }
 ```
 
