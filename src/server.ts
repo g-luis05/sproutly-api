@@ -40,6 +40,9 @@ export class Server {
         this.app.use( express.urlencoded( { extended: true, limit: '10mb' } ) );
         
 
+        //trust proxy
+        this.app.set('trust proxy', 1);
+
         //Global rate limiter
         this.app.use('/api/', apiLimiter  );
 
