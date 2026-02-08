@@ -9,7 +9,7 @@ export class AuthController {
 
         try {
             await AuthService.requestOtp(req.body.email);
-            return res.status(200).json({ message: 'If the email exists, an OTP will be sent' });
+            return res.status(200).json({ message: 'OTP sent to email' });
         } catch (error) {
             return next(error);
         }
