@@ -3,6 +3,7 @@ import cors from 'cors';
 import { ErrorMiddleware } from './middlewares';
 import helmet from 'helmet';
 import { apiLimiter } from './infrastructure/config/rate-limit';
+import { envs } from './infrastructure/config/env';
 
 interface Options {
     port: number;
@@ -29,7 +30,7 @@ export class Server {
         this.app.use(helmet());
 
         this.app.use( cors({
-            origin: '*',
+            origin: envs.FRONTEND_URL || `http://localhost:${envs.PORT}`,
             credentials: true,
             methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
             allowedHeaders: ['Content-Type', 'Authorization'],
@@ -54,7 +55,7 @@ export class Server {
 
 
         this.serverListener = this.app.listen( this.port, () => {
-            console.log( `Server running` );
+            console.log( `Server running on port ${ this.port }` );
         });
     }
 
