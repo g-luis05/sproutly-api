@@ -19,4 +19,7 @@ export const envs = {
     RESEND_API_KEY: get('RESEND_API_KEY').required().asString(),
     EMAIL_FROM: get('EMAIL_FROM').required().asString(),
 
+    //Frontend URL(optional)
+    FRONTEND_URL: get('FRONTEND_URL').asString(),
+
 }
