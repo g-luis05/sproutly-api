@@ -10,8 +10,6 @@ export class ErrorMiddleware {
             return res.status(error.statusCode).json( { message: error.message } );
         } else {
             console.error('Error:', error);
-            console.log('Header', req.headers);
-            console.log('Body', req.body);
             return res.status(500).json( { message: 'Internal server error' } );
         }
     }
