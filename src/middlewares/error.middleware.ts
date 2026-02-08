@@ -9,6 +9,10 @@ export class ErrorMiddleware {
         if (error instanceof CustomError) {
             return res.status(error.statusCode).json( { message: error.message } );
         } else {
+            console.log(error);
+            console.error('Error:', error);
+            console.log('Header', req.headers);
+            console.log('Body', req.body);
             return res.status(500).json( { message: 'Internal server error' } );
         }
     }
