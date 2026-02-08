@@ -408,7 +408,7 @@ Endpoints may return the following error responses:
 
 ## Security Features
 
-### Authentication $ Authorization
+### Authentication & Authorization
 - **Passwordless OTP**: Email-based authentication
 - **JWT Tokens**: Access Tokens (10 min) + Refresh Tokens (7 days)
 - **Token Refresh**: Automatic session renewal
