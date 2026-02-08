@@ -29,6 +29,7 @@ export class EmailService {
         });
 
         if (error) {
+            console.log(error);
             console.error('Error sending email:', error);
         }
     } catch (error) {
