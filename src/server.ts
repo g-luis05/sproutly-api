@@ -4,6 +4,7 @@ import { ErrorMiddleware } from './middlewares';
 import helmet from 'helmet';
 import { apiLimiter } from './infrastructure/config/rate-limit';
 import { envs } from './infrastructure/config/env';
+import cookieParser from 'cookie-parser';
 
 interface Options {
     port: number;
@@ -36,6 +37,8 @@ export class Server {
             methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
             allowedHeaders: ['Content-Type', 'Authorization'],
         }) );
+
+        this.app.use(cookieParser());
 
         // Middleware
         this.app.use( express.json({ limit: '10mb' }) );
