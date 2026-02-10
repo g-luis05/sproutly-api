@@ -55,9 +55,11 @@ export class AuthController {
         try {
             const refreshToken = req.cookies.refreshToken;
 
-            if (refreshToken) {
-                await AuthService.logout(refreshToken);
+            if (!refreshToken) {
+                return res.status(401).json({ message: 'Unauthorized' });
             }
+
+            await AuthService.logout(refreshToken);
 
             res.clearCookie('refreshToken', {
                 path: '/api/v1/auth/refresh',
