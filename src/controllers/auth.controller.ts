@@ -62,7 +62,7 @@ export class AuthController {
             await AuthService.logout(refreshToken);
 
             res.clearCookie('refreshToken', {
-                path: '/api/v1/auth/refresh',
+                path: '/api/v1/auth',
             });
             
             return res.status(200).json({ message: 'Logout successful' });
