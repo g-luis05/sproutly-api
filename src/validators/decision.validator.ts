@@ -15,7 +15,3 @@ export const updateDecisionSchema = z.object({
     status: z.nativeEnum(DecisionStatus).optional(),
     order: z.number().nullable().optional(),
 });
-
-export const refreshTokenSchema = z.object({
-    refreshToken: z.string().uuid({ message: "Invalid token" }),
-});

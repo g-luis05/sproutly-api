@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { AuthController } from "../controllers";
-import { refreshTokenSchema, requestOtpSchema, verifyOtpSchema } from "../validators";
+import { requestOtpSchema, verifyOtpSchema } from "../validators";
 import { ValidateMiddleware } from "../middlewares";
 import { refreshLimiter, requestOtpLimiter, verifyOtpLimiter } from "../infrastructure/config/rate-limit";
 
@@ -29,7 +29,6 @@ export class AuthRoutes {
         );
 
         router.post('/logout',
-            ValidateMiddleware.validateBody(refreshTokenSchema),
             AuthController.logout,
         );
 
