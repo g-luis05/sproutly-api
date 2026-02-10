@@ -80,12 +80,10 @@ export class AuthService {
         const user = await UserRepository.findById(stored.userId);
         if (!user) throw CustomError.unauthorized('User not found');
 
-        const newAccessToken = jwtAdapter.generateToken({
+        return jwtAdapter.generateToken({
             id: user.id,
             email: user.email
         });
-
-        return { accessToken: newAccessToken };
     }
 
     static async logout(refreshToken: string) {

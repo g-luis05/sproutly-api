@@ -25,8 +25,7 @@ export class AuthRoutes {
 
         router.post('/refresh',
             refreshLimiter,
-            ValidateMiddleware.validateBody(refreshTokenSchema),
-            AuthController.refresh
+            AuthController.refresh,
         );
 
         router.post('/logout',

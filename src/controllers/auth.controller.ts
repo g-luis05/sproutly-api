@@ -20,7 +20,16 @@ export class AuthController {
 
         try {
             const tokens = await AuthService.verifyOtp(req.body.email, req.body.code);
-            return res.status(200).json(tokens);
+
+            res.cookie('refreshToken', tokens.refreshToken, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'none',
+                path: '/auth/refresh',
+                maxAge: 7 * 24 * 60 * 60 * 1000
+            });
+
+            return res.status(200).json(tokens.accessToken);
         } catch (error) {
             return next(error);
         }
@@ -29,9 +38,14 @@ export class AuthController {
 
     static async refresh( req: Request, res: Response, next: NextFunction ) {
         try {
-            const { refreshToken } = req.body;
-            const tokens = await AuthService.refresh(refreshToken);
-            return res.status(200).json(tokens);
+            const refreshToken = req.cookies.refreshToken;
+            if (!refreshToken) {
+                return res.status(401).json({ message: 'Unauthorized' });
+            }
+
+            const accessToken = await AuthService.refresh(refreshToken);
+
+            return res.status(200).json({ accessToken });
         } catch(error) {
             return next(error);
         }
@@ -39,8 +53,16 @@ export class AuthController {
 
     static async logout( req: Request, res: Response, next: NextFunction ) {
         try {
-            const { refreshToken } = req.body;
-            await AuthService.logout(refreshToken);
+            const refreshToken = req.cookies.refreshToken;
+
+            if (refreshToken) {
+                await AuthService.logout(refreshToken);
+            }
+
+            res.clearCookie('refreshToken', {
+                path: '/auth/refresh',
+            });
+            
             return res.status(200).json({ message: 'Logout successful' });
         } catch(error) {
             return next(error);
