@@ -148,37 +148,32 @@ Content-Type: application/json
 **Response**:
 ```json
 {
-    "accessToken": "eyJhbGh...",
-    "refreshToken": "88gf..."
+    "accessToken": "eyJhbGh..."
 }
 ```
+
+**Note**: The refreshToken will be set as HTTPOnly Cookie
 
 ---
 
 #### Refresh Token
-- Will refresh the access token 
+- Will refresh the access token.
 
 ```http
 POST /auth/refresh
 Content-Type: application/json
 
-{
-    "refreshToken": "88gf73..."
-}
 ```
 
 ---
 
 #### Logout
-- Will revoke the actual refresh token
+- Will revoke the actual refresh token and delete it from Cookies
 
 ```http
 POST /auth/logout
 Content-Type: application/json
 
-{
-    "refreshToken": "88gf73..."
-}
 ```
 
 ---
