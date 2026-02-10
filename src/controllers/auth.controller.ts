@@ -23,9 +23,9 @@ export class AuthController {
 
             res.cookie('refreshToken', tokens.refreshToken, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
+                secure: true,
                 sameSite: 'none',
-                path: '/',
+                path: '/api/v1/auth/refresh',
                 maxAge: 7 * 24 * 60 * 60 * 1000
             });
 
@@ -60,7 +60,7 @@ export class AuthController {
             }
 
             res.clearCookie('refreshToken', {
-                path: '/',
+                path: '/api/v1/auth/refresh',
             });
             
             return res.status(200).json({ message: 'Logout successful' });
