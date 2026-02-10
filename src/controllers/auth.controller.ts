@@ -25,7 +25,7 @@ export class AuthController {
                 httpOnly: true,
                 secure: true,
                 sameSite: 'none',
-                path: '/api/v1/auth/refresh',
+                path: '/api/v1/auth',
                 maxAge: 7 * 24 * 60 * 60 * 1000
             });
 
