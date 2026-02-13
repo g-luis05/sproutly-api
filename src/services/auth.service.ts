@@ -36,9 +36,13 @@ export class AuthService {
         const user = await UserRepository.findByEmail(email);
         if (!user) throw CustomError.badRequest('User not found');
         
-
         const otp = await OtpRepository.findActive(user.id);
         if (!otp) throw CustomError.badRequest('OTP not found');
+
+        if (otp.expiresAt < new Date()) {
+            await OtpRepository.markUsed(otp.id);
+            throw CustomError.badRequest('OTP expired');
+        }
 
         if (otp.attempts >= 3) {
             await OtpRepository.markUsed(otp.id);
