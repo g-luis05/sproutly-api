@@ -30,9 +30,9 @@ export class Server {
         //Security headers
         this.app.use(helmet());
 
-        //envs.FRONTEND_URL || `http://localhost:${envs.PORT}` Origin
+        //envs.FRONTEND_URL - This will only receive request from this origin
         this.app.use( cors({
-            origin: true,
+            origin: envs.FRONTEND_URL, // Could be the local host of the frontend on dev, ex: http://localhost:5173 - React
             credentials: true,
             methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
             allowedHeaders: ['Content-Type', 'Authorization'],
